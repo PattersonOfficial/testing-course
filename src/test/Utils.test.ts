@@ -13,45 +13,75 @@ describe('Utils test suite', () => {
     expect(actual).toBe(expected);
   });
 
-  it('should return info for a valid string', () => {
-    // arrange:
+  // parameterized tests
+  describe('ToUpperCase examples', () => {
+    it.each([
+      { input: 'abc', expected: 'ABC' },
+      { input: 'My-String', expected: 'MY-STRING' },
+      { input: 'def', expected: 'DEF' },
+    ])('$input toUpperCase should be $expected', ({ input, expected }) => {
+      const actual = toUpperCase(input);
+      expect(actual).toBe(expected);
+    });
+  });
 
-    // act:
-    const actual = getStringInfo('My-String');
+  describe('getStringInfo for args: My-String should', () => {
+    it('return right length', () => {
+      const actual = getStringInfo('My-String');
+      // Expecting the string to have a length of 9
+      expect(actual.length).toBe(9);
+      // Expecting the string to have a length of 9 v2
+      expect(actual.characters).toHaveLength(9);
+    });
 
-    // assert:
-    // Expecting the string to be lowercased
-    expect(actual.lowerCase).toBe('my-string');
-    // Expecting the string to be uppercased
-    expect(actual.upperCase).toBe('MY-STRING');
-    // Expecting the string to be an array of characters
-    expect(actual.characters).toEqual([
-      'M',
-      'y',
-      '-',
-      'S',
-      't',
-      'r',
-      'i',
-      'n',
-      'g',
-    ]);
-    // Expecting the string to have a length of 9
-    expect(actual.length).toBe(9);
-    // Expecting the string to have a length of 9 v2
-    expect(actual.characters).toHaveLength(9);
-    // Expecting the string to have no extra info e.g: an empty object
-    expect(actual.extraInfo).toEqual({});
-    // Expecting to retrieve data if the string is included in the characters array
-    expect(actual.characters).toContain<string>('M');
-    // Expecting to retrieve data if the string is included in the characters array
-    expect(actual.characters).toEqual(
-      expect.arrayContaining(['S', 't', 'r', 'i', 'n', 'g', 'M', 'y', '-'])
-    );
-    // Expecting data from the extraInfo data object definition
-    expect(actual.extraInfo).not.toBeUndefined();
-    expect(actual.extraInfo).not.toBe(undefined);
-    expect(actual.extraInfo).toBeDefined();
-    expect(actual.extraInfo).toBeTruthy();
+    it('return right lowercase', () => {
+      const actual = getStringInfo('My-String');
+      // Expecting the string to be lowercased
+      expect(actual.lowerCase).toBe('my-string');
+    });
+
+    it('return right uppercase', () => {
+      const actual = getStringInfo('My-String');
+      // Expecting the string to be uppercased
+      expect(actual.upperCase).toBe('MY-STRING');
+    });
+
+    it('return right characters', () => {
+      const actual = getStringInfo('My-String');
+      expect(actual.characters).toEqual([
+        'M',
+        'y',
+        '-',
+        'S',
+        't',
+        'r',
+        'i',
+        'n',
+        'g',
+      ]);
+      // Expecting the string to have no extra info e.g: an empty object
+      expect(actual.extraInfo).toEqual({});
+      // Expecting to retrieve data if the string is included in the characters array
+      expect(actual.characters).toContain<string>('M');
+      // Expecting to retrieve data if the string is included in the characters array
+      expect(actual.characters).toEqual(
+        expect.arrayContaining(['S', 't', 'r', 'i', 'n', 'g', 'M', 'y', '-'])
+      );
+    });
+
+    it('return defined extraInfo', () => {
+      const actual = getStringInfo('My-String');
+      expect(actual.extraInfo).toBeDefined();
+    });
+
+    it('return defined extra info', () => {
+      const actual = getStringInfo('My-String');
+      expect(actual.extraInfo).toBeDefined();
+    });
+
+    it('return right extra info', () => {
+      const actual = getStringInfo('My-String');
+      expect(actual.extraInfo).toEqual({});
+    });
   });
 });
